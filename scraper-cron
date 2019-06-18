@@ -1,0 +1,2 @@
+* * * * * cd /tmp && docker build -t 'scraper' . && docker run --rm scraper
+# An empty line is required at the end of this file for a valid cron file.

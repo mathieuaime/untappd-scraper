@@ -3,9 +3,15 @@ package com.mathieuaime.untappdscraper;
 import com.mathieuaime.untappdscraper.model.CheckIn;
 import com.mathieuaime.untappdscraper.scraper.Scraper;
 import java.io.IOException;
+import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+import org.influxdb.BatchOptions;
+import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDBFactory;
+import org.influxdb.dto.Point;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -13,7 +19,7 @@ import org.jsoup.nodes.Element;
 public class UntappdScraper {
 
   public static void main(String[] args) {
-    scrapAccount(List.of());
+    scrapAccount(Arrays.asList());
   }
 
   private static void scrapAccount(Collection<String> usernames) {
@@ -38,7 +44,24 @@ public class UntappdScraper {
     return connection;
   }
 
-  private static void storeCheckIn(CheckIn e) {
-    System.out.println(e);
+  private static void storeCheckIn(CheckIn checkIn) {
+    System.out.println("Store checkin " + checkIn);
+    try (InfluxDB influxDB = InfluxDBFactory.connect(" http://influxdb:8086")) {
+      String dbName = "untappd";
+      influxDB.setDatabase(dbName);
+      influxDB.enableBatch(BatchOptions.DEFAULTS);
+
+      influxDB.write(Point.measurement("checkin")
+          .time(checkIn.date().toInstant(ZoneOffset.ofHours(2)).toEpochMilli(),
+              TimeUnit.MILLISECONDS)
+          .addField("username", checkIn.username())
+          .addField("brewery", checkIn.beer().brewery())
+          .addField("beer", checkIn.beer().name())
+          .addField("score", checkIn.beer().myScore())
+          .addField("globalScore", checkIn.beer().globalScore())
+          .addField("abv", checkIn.beer().abv())
+          .addField("ibu", checkIn.beer().ibu())
+          .build());
+    }
   }
 }

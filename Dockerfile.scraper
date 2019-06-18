@@ -1,0 +1,7 @@
+FROM openjdk:11-jre
+
+WORKDIR /
+
+COPY scraper.jar scraper.jar
+
+CMD java -jar scraper.jar
