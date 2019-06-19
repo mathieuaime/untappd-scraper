@@ -1,8 +1,10 @@
-version: '3'
+version: '3.4'
 
 services:
   scraper-cron:
-    build: .
+    build:
+        context: .
+        network: host
     container_name: scraper-cron
     environment:
        - TZ=Europe/Paris
@@ -10,10 +12,6 @@ services:
        - xmx=600m
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock
-    dns:
-       - 8.8.8.8
-    ports:
-       - "8080:8080"
     restart: always
     networks:
       - monitoring

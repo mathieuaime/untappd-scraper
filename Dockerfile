@@ -4,12 +4,15 @@ RUN apt-get update && apt-get -y install cron docker.io
 
 COPY scraper-cron /etc/cron.d/scraper-cron
 
+COPY scrap.sh /tmp/scrap.sh
+
 COPY target/*with-dependencies.jar /tmp/scraper.jar
 
 COPY Dockerfile.scraper /tmp/Dockerfile
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/scraper-cron
+RUN chmod a+rx /tmp/scrap.sh
 
 # Apply cron job
 RUN crontab /etc/cron.d/scraper-cron

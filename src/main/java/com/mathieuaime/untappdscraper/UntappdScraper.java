@@ -46,7 +46,7 @@ public class UntappdScraper {
 
   private static void storeCheckIn(CheckIn checkIn) {
     System.out.println("Store checkin " + checkIn);
-    try (InfluxDB influxDB = InfluxDBFactory.connect(" http://influxdb:8086")) {
+    try (InfluxDB influxDB = InfluxDBFactory.connect("http://influxdb:8086")) {
       String dbName = "untappd";
       influxDB.setDatabase(dbName);
       influxDB.enableBatch(BatchOptions.DEFAULTS);
