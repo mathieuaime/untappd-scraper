@@ -12,7 +12,9 @@ public abstract class CheckIn {
 
   public abstract LocalDateTime date();
 
-  public static CheckIn create(String username, Beer beer, LocalDateTime date) {
-    return new AutoValue_CheckIn(username, beer, date);
+  public abstract String venue();
+
+  public static CheckIn create(String username, Beer beer, LocalDateTime date, String venue) {
+    return new AutoValue_CheckIn(username, beer, date, venue);
   }
 }

@@ -19,6 +19,10 @@ public abstract class Beer {
 
   public abstract Float ibu();
 
+  public static Beer create(String name, String brewery, String style, Float myScore) {
+    return create(name, brewery, style, myScore, -1F, -1F, -1F);
+  }
+
   public static Beer create(String name, String brewery, String style, Float myScore,
       Float globalScore, Float abv, Float ibu) {
     return new AutoValue_Beer(name, brewery, style, myScore, globalScore, abv, ibu);
