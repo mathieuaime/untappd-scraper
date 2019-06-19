@@ -65,8 +65,7 @@ public class UntappdScraper {
           .time(checkIn.date().toInstant(ZoneOffset.UTC).toEpochMilli(),
               TimeUnit.MILLISECONDS)
           .addField("username", checkIn.username())
-          .addField("brewery", checkIn.beer().brewery())
-          .addField("beer", checkIn.beer().name())
+          .addField("beer", checkIn.beer().brewery() + " - " + checkIn.beer().name())
           .addField("score", checkIn.beer().myScore())
           .addField("globalScore", checkIn.beer().globalScore())
           .addField("abv", checkIn.beer().abv())
