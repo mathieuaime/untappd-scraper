@@ -10,7 +10,7 @@
 
   <properties>
     <jdk.version>11</jdk.version>
-    <jsoup.version>1.10.2</jsoup.version>
+    <jsoup.version>1.15.3</jsoup.version>
     <auto-value.version>1.6.2</auto-value.version>
     <influxdb-java.version>2.15</influxdb-java.version>
   </properties>
